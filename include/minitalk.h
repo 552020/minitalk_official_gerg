@@ -50,7 +50,6 @@ typedef enum e_server_feedback
 typedef struct s_client
 {
 	struct sigaction	sa;
-	unsigned int		len;
 	int					active;
 	t_server_feedback	server_feedback;
 }						t_client;

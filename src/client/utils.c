@@ -18,7 +18,6 @@ void	error(char *error_msg)
 {
 	ft_printf("FAILED!\n");
 	ft_printf("ERROR: %s\n", error_msg);
-	ft_printf("Buuut %i  bytes were succesfully sent.\n", g_client.len);
 	exit(0);
 }
 

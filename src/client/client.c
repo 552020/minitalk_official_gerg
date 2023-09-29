@@ -49,7 +49,6 @@ void	transmission_msg(char *msg, pid_t server_pid)
 				usleep(10);
 			c = c << 1;
 		}
-		++g_client.len;
 		msg++;
 	}
 }
@@ -80,8 +79,6 @@ int	main(int argc, char **argv)
 	args_check(argc, argv);
 	setup_signal_handler();
 	g_client.active = 1;
-	ft_printf("The size of the message is  %i  bytes.\n", ft_strlen(argv[2]));
-	ft_printf("The transmission has...");
 	transmission_msg(argv[2], ft_atoi(argv[1]));
 	transmission_zero(ft_atoi(argv[1]));
 	error("The client did not get the bye-bye signal.");
