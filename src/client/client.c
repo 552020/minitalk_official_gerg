@@ -76,15 +76,18 @@ static void	transmission_zero(pid_t server_pid)
 	}
 }
 
+void	setup_signal_handler(void)
+{
+	sigemptyset(&g_client.sa.sa_mask);
+	g_client.sa.sa_handler = sig_handler;
+	sigaction(SIGUSR1, &g_client.sa, 0);
+	sigaction(SIGUSR2, &g_client.sa, 0);
+}
+
 int	main(int argc, char **argv)
 {
 	args_check(argc, argv);
-	sigemptyset(&g_client.sa1.sa_mask);
-	sigemptyset(&g_client.sa2.sa_mask);
-	g_client.sa1.sa_handler = sig_handler;
-	g_client.sa2.sa_handler = sig_handler;
-	sigaction(SIGUSR1, &g_client.sa1, 0);
-	sigaction(SIGUSR2, &g_client.sa2, 0);
+	setup_signal_handler();
 	g_client.active = 1;
 	ft_printf("The size of the message is  %i  bytes.\n", ft_strlen(argv[2]));
 	ft_printf("The transmission has...");

@@ -37,8 +37,7 @@ typedef struct s_server
 
 typedef struct s_client
 {
-	struct sigaction	sa1;
-	struct sigaction	sa2;
+	struct sigaction	sa;
 	unsigned int		len;
 	int					active;
 	long long			sent_bit;
