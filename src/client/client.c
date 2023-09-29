@@ -19,22 +19,21 @@ void		error(char *error_msg);
 void		args_check(int argc, char **argv);
 void		banner(void);
 
-static void	bb_handler(int sig)
+static void	sig_handler(int sig)
 {
-	(void)sig;
-	ft_printf("SUCCEEDED!");
-	ft_printf("🦊\n");
-	exit(0);
-}
-
-static void	conn_handler(int sig)
-{
-	(void)sig;
-	g_client.waiter = 0;
-	if (g_client.active)
+	if (sig == SIGUSR2)
 	{
-		if (++g_client.received_bit != g_client.sent_bit)
-			error("Anomaly between sent and received signals.");
+		ft_printf("Transmission complete!\n");
+		exit(0);
+	}
+	else if (sig == SIGUSR1)
+	{
+		g_client.waiter = 0;
+		if (g_client.active)
+		{
+			if (++g_client.received_bit != g_client.sent_bit)
+				error("Some anomaly happened!");
+		}
 	}
 }
 
@@ -82,8 +81,8 @@ int	main(int argc, char **argv)
 	args_check(argc, argv);
 	sigemptyset(&g_client.sa1.sa_mask);
 	sigemptyset(&g_client.sa2.sa_mask);
-	g_client.sa1.sa_handler = conn_handler;
-	g_client.sa2.sa_handler = bb_handler;
+	g_client.sa1.sa_handler = sig_handler;
+	g_client.sa2.sa_handler = sig_handler;
 	sigaction(SIGUSR1, &g_client.sa1, 0);
 	sigaction(SIGUSR2, &g_client.sa2, 0);
 	g_client.active = 1;
