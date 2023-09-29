@@ -69,7 +69,9 @@ int	main(void)
 	{
 		if (usleep(CONNECTION_CHECK_INTERVAL) == 0 && g_server.connection == ON)
 		{
-			ft_printf("Something is rotten in the state of this server! Let's restart it!\n");
+			ft_printf("Something is rotten in the state of this server!\n");
+			ft_printf("Let's restart it! The Server PID is still: %d.\n",
+				getpid());
 			init();
 		}
 	}

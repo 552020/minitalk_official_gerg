@@ -44,7 +44,8 @@ void	args_check(int argc, char **argv)
 	}
 	else if (!(ft_atoi(argv[1]) > 0))
 	{
-		ft_printf("No no no! Please pay attention while copying the PID of the server!\n");
+		ft_printf("No no no!\n");
+		ft_printf("Please pay attenion while copying the PID of the server!\n");
 		exit(0);
 	}
 }
