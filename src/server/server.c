@@ -50,7 +50,7 @@ void	build_and_write_char(int sig, pid_t client)
 		if (g_server.char_accumulator == 0)
 		{
 			kill(client, SIGUSR2);
-			ft_printf("\nDone!\n");
+			ft_printf("\n");
 			init();
 		}
 		else

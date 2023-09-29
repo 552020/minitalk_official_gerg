@@ -14,7 +14,7 @@
 
 extern t_client	g_client;
 
-void	error(char *error_msg)
+void	print_error_and_exit(char *error_msg)
 {
 	ft_printf("FAILED!\n");
 	ft_printf("ERROR: %s\n", error_msg);
@@ -31,7 +31,7 @@ int	waiting_server_feedback(void)
 		return (0);
 	}
 	if (waiter++ > WAITER_FEEDBACK_ATTEMPTS)
-		error("Bit feedback failed.\n");
+		print_error_and_exit("Bit feedback failed.\n");
 	return (g_client.server_feedback);
 }
 

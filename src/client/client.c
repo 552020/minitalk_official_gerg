@@ -15,7 +15,7 @@
 t_client	g_client;
 
 int			waiting_server_feedback(void);
-void		error(char *error_msg);
+void		print_error_and_exit(char *error_msg);
 void		args_check(int argc, char **argv);
 
 static void	sig_handler(int sig)
@@ -29,7 +29,7 @@ static void	sig_handler(int sig)
 		g_client.server_feedback = RECEIVED;
 }
 
-void	transmission_msg(char *msg, pid_t server_pid)
+void	send_msg(char *msg, pid_t server_pid)
 {
 	char	c;
 	char	i;
@@ -53,7 +53,7 @@ void	transmission_msg(char *msg, pid_t server_pid)
 	}
 }
 
-static void	transmission_zero(pid_t server_pid)
+static void	send_zero(pid_t server_pid)
 {
 	int	i;
 
@@ -77,8 +77,8 @@ int	main(int argc, char **argv)
 {
 	args_check(argc, argv);
 	setup_signal_handler();
-	transmission_msg(argv[2], ft_atoi(argv[1]));
-	transmission_zero(ft_atoi(argv[1]));
-	error("Something went wrong: I didn't get SIGUSR2.");
+	send_msg(argv[2], ft_atoi(argv[1]));
+	send_zero(ft_atoi(argv[1]));
+	print_error_and_exit("Something went wrong: I didn't get SIGUSR2.");
 	return (0);
 }
