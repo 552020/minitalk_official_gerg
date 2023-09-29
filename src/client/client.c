@@ -17,7 +17,6 @@ t_client	g_client;
 int			waiting_for_sig(void);
 void		error(char *error_msg);
 void		args_check(int argc, char **argv);
-void		banner(void);
 
 static void	sig_handler(int sig)
 {
