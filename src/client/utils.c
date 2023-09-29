@@ -22,13 +22,18 @@ void	error(char *error_msg)
 	exit(0);
 }
 
-int	waiting_for_sig(void)
+int	waiting_server_feedback(void)
 {
-	if (g_client.waiter == 0)
+	static int	waiter;
+
+	if (g_client.server_feedback == RECEIVED)
+	{
+		waiter = 0;
 		return (0);
-	if (g_client.waiter++ > 100)
-		error("Client didn't receive a signal from the server in time.");
-	return (g_client.waiter);
+	}
+	if (waiter++ > WAITER_FEEDBACK_ATTEMPTS)
+		error("Bit feedback failed.\n");
+	return (g_client.server_feedback);
 }
 
 void	args_check(int argc, char **argv)

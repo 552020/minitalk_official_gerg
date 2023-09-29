@@ -14,7 +14,7 @@
 
 t_client	g_client;
 
-int			waiting_for_sig(void);
+int			waiting_server_feedback(void);
 void		error(char *error_msg);
 void		args_check(int argc, char **argv);
 
@@ -27,7 +27,7 @@ static void	sig_handler(int sig)
 	}
 	else if (sig == SIGUSR1)
 	{
-		g_client.waiter = 0;
+		g_client.server_feedback = RECEIVED;
 		if (g_client.active)
 		{
 			if (++g_client.received_bit != g_client.sent_bit)
@@ -47,13 +47,13 @@ void	transmission_msg(char *msg, pid_t server_pid)
 		i = 0;
 		while (i++ < 8)
 		{
-			g_client.waiter = 1;
+			g_client.server_feedback = RESET;
 			++g_client.sent_bit;
 			if (c & 0b10000000)
 				kill(server_pid, SIGUSR1);
 			else
 				kill(server_pid, SIGUSR2);
-			while (waiting_for_sig())
+			while (waiting_server_feedback())
 				usleep(10);
 			c = c << 1;
 		}

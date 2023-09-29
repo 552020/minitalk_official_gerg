@@ -19,11 +19,13 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef enum
+/* SERVER */
+
+typedef enum e_server_state
 {
 	OFF,
 	ON
-}						e_server_state;
+}						t_server_state;
 
 # define CONNECTION_CHECK_INTERVAL 100000 // Sleep duration in microseconds
 
@@ -32,8 +34,18 @@ typedef struct s_server
 	struct sigaction	sa;
 	char				char_accumulator;
 	int					bit_index;
-	e_server_state		connection;
+	t_server_state		connection;
 }						t_server;
+
+/* CLIENT */
+
+# define WAITER_FEEDBACK_ATTEMPTS 100
+
+typedef enum e_server_feedback
+{
+	RECEIVED = 0,
+	RESET = 1
+}						t_server_feedback;
 
 typedef struct s_client
 {
@@ -42,7 +54,7 @@ typedef struct s_client
 	int					active;
 	long long			sent_bit;
 	long long			received_bit;
-	int					waiter;
+	t_server_feedback	server_feedback;
 }						t_client;
 
 #endif
