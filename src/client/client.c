@@ -26,14 +26,7 @@ static void	sig_handler(int sig)
 		exit(0);
 	}
 	else if (sig == SIGUSR1)
-	{
 		g_client.server_feedback = RECEIVED;
-		if (g_client.active)
-		{
-			if (++g_client.received_bit != g_client.sent_bit)
-				error("Some anomaly happened!");
-		}
-	}
 }
 
 void	transmission_msg(char *msg, pid_t server_pid)
@@ -48,7 +41,6 @@ void	transmission_msg(char *msg, pid_t server_pid)
 		while (i++ < 8)
 		{
 			g_client.server_feedback = RESET;
-			++g_client.sent_bit;
 			if (c & 0b10000000)
 				kill(server_pid, SIGUSR1);
 			else

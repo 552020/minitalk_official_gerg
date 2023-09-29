@@ -52,8 +52,6 @@ typedef struct s_client
 	struct sigaction	sa;
 	unsigned int		len;
 	int					active;
-	long long			sent_bit;
-	long long			received_bit;
 	t_server_feedback	server_feedback;
 }						t_client;
 
