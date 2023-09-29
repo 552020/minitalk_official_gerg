@@ -58,7 +58,6 @@ static void	transmission_zero(pid_t server_pid)
 	int	i;
 
 	i = 8;
-	g_client.active = 0;
 	while (i-- > 0)
 	{
 		kill(server_pid, SIGUSR2);
@@ -78,9 +77,8 @@ int	main(int argc, char **argv)
 {
 	args_check(argc, argv);
 	setup_signal_handler();
-	g_client.active = 1;
 	transmission_msg(argv[2], ft_atoi(argv[1]));
 	transmission_zero(ft_atoi(argv[1]));
-	error("The client did not get the bye-bye signal.");
+	error("Something went wrong: I didn't get SIGUSR2.");
 	return (0);
 }
